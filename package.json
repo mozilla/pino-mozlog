@@ -1,0 +1,32 @@
+{
+  "name": "pino-mozlog",
+  "version": "1.0.0",
+  "description": "A transport for transforming pino logs into mozlog",
+  "main": "index.js",
+  "bin": {
+    "pino-mozlog": "./index.js"
+  },
+  "scripts": {
+    "prettier": "prettier --write '**'",
+    "test": "jest"
+  },
+  "author": "Mozilla Add-ons Team",
+  "license": "MPL-2.0",
+  "repository": "github:willdurand/pino-mozlog",
+  "dependencies": {
+    "internet-timestamp": "^0.0.1",
+    "minimist": "^1.2.0",
+    "pino-syslog": "^1.2.0",
+    "pump": "^3.0.0",
+    "split2": "^2.2.0",
+    "through2": "^2.0.3"
+  },
+  "devDependencies": {
+    "jest": "^23.4.2",
+    "jest-json-schema": "^2.0.1",
+    "prettier": "^1.14.0"
+  },
+  "jest": {
+    "testURL": "http://localhost/"
+  }
+}
