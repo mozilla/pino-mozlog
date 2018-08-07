@@ -1,13 +1,13 @@
 {
   "name": "pino-mozlog",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A transport for transforming pino logs into mozlog",
   "main": "index.js",
   "bin": {
     "pino-mozlog": "./index.js"
   },
   "scripts": {
-    "build": "rimraf dist/ && babel -d dist/ index.js && babel -d dist/src/ src/ && cp -r LICENSE.txt README.md package.json dist/" ,
+    "build": "rimraf dist/ && babel -d dist/ index.js && babel -d dist/src/ src/ && cp -r LICENSE.txt README.md package.json dist/",
     "prettier": "prettier --write '**'",
     "test": "jest"
   },
