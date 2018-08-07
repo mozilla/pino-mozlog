@@ -15,7 +15,7 @@ const createParseFunction = ({ options = DEFAULT_OPTIONS } = {}) => {
       return JSON.parse(data);
     } catch (err) {
       if (options.debug) {
-        console.error('Could not parse:', data);
+        console.error('[pino-mozlog] could not parse:', { data });
       }
     }
 
@@ -57,8 +57,12 @@ const createTransformFunction = ({
   options = DEFAULT_OPTIONS,
 } = {}) => {
   return (record, enc, cb) => {
-    if (typeof record.time !== 'undefined') {
-      console.log(JSON.stringify(_format(record, options)));
+    try {
+      if (typeof record.time !== 'undefined') {
+        console.log(JSON.stringify(_format(record, options)));
+      }
+    } catch (error) {
+      console.error('[pino-mozlog] could not format:', { error, record });
     }
 
     cb();
