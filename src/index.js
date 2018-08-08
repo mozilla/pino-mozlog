@@ -6,16 +6,22 @@ const ENV_VERSION = '2.0';
 
 const DEFAULT_OPTIONS = {
   type: 'app.log',
-  debug: false,
+  silent: false,
 };
 
-const createParseFunction = ({ options = DEFAULT_OPTIONS } = {}) => {
+const createParseFunction = ({
+  _console = console,
+  options = DEFAULT_OPTIONS,
+} = {}) => {
   return (data) => {
     try {
       return JSON.parse(data);
-    } catch (err) {
-      if (options.debug) {
-        console.error('[pino-mozlog] could not parse:', { data });
+    } catch (error) {
+      if (!options.silent) {
+        _console.error('[pino-mozlog] could not parse:', {
+          error: error.toString(),
+          data,
+        });
       }
     }
 
@@ -65,7 +71,7 @@ const createTransformFunction = ({
 
       _console.log(JSON.stringify(_format(record, options)));
     } catch (error) {
-      if (options.debug) {
+      if (!options.silent) {
         _console.error('[pino-mozlog] could not format:', {
           error: error.toString(),
           record,
