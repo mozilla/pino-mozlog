@@ -15,6 +15,8 @@ describe(__filename, () => {
   // Setup JSON schema matchers.
   expect.extend(matchers);
 
+  let _console;
+
   const createPinoRecord = (fields = {}) => {
     return {
       hostname: 'host.example.org',
@@ -28,21 +30,67 @@ describe(__filename, () => {
     };
   };
 
+  beforeEach(() => {
+    _console = { error: jest.fn() };
+  });
+
   describe('parse', () => {
-    const parse = createParseFunction();
+    let parse;
+
+    beforeEach(() => {
+      parse = createParseFunction({ _console });
+    });
 
     it('parses a JSON string', () => {
       const data = { some: 'object' };
 
       expect(parse(JSON.stringify(data))).toEqual(data);
+      expect(_console.error).not.toHaveBeenCalled();
     });
 
     it('returns an empty object when invalid JSON is supplied', () => {
-      expect(parse('not JSON data')).toEqual({});
+      const data = 'not JSON data';
+      expect(parse(data)).toEqual({});
+      expect(_console.error).toHaveBeenCalledWith(
+        '[pino-mozlog] could not parse:',
+        {
+          error: 'SyntaxError: Unexpected token o in JSON at position 1',
+          data,
+        }
+      );
     });
 
     it('returns an empty object when an empty string is supplied', () => {
-      expect(parse('')).toEqual({});
+      const data = '';
+      expect(parse(data)).toEqual({});
+      expect(_console.error).toHaveBeenCalledWith(
+        '[pino-mozlog] could not parse:',
+        {
+          error: 'SyntaxError: Unexpected end of JSON input',
+          data,
+        }
+      );
+    });
+
+    describe('with --silent', () => {
+      const options = {
+        ...DEFAULT_OPTIONS,
+        silent: true,
+      };
+
+      beforeEach(() => {
+        parse = createParseFunction({ _console, options });
+      });
+
+      it('returns an empty object when invalid JSON is supplied', () => {
+        parse('not JSON data');
+        expect(_console.error).not.toHaveBeenCalled();
+      });
+
+      it('returns an empty object when an empty string is supplied', () => {
+        parse('');
+        expect(_console.error).not.toHaveBeenCalled();
+      });
     });
   });
 
@@ -100,32 +148,59 @@ describe(__filename, () => {
   describe('createTransformFunction', () => {
     it('calls the format function when transforming a record', () => {
       const record = createPinoRecord();
+      const callback = jest.fn();
 
       const _format = jest.fn();
       _format.mockImplementation(() => 'a mozlog');
 
       const transform = createTransformFunction({ _format });
-      transform(record, null, jest.fn());
+      transform(record, null, callback);
 
       expect(_format).toHaveBeenCalledWith(record, DEFAULT_OPTIONS);
+      expect(callback).toHaveBeenCalled();
     });
 
     it('does not call the format function when the record is an empty object', () => {
       const _format = jest.fn();
+      const record = {};
 
-      const transform = createTransformFunction({ _format });
-      transform({}, null, jest.fn());
+      const transform = createTransformFunction({ _console, _format });
+      transform(record, null, jest.fn());
 
       expect(_format).not.toHaveBeenCalled();
+      expect(_console.error).toHaveBeenCalledWith(
+        '[pino-mozlog] could not format:',
+        { error: 'Error: invalid pino record', record }
+      );
     });
 
-    it('calls the callback', () => {
+    it('calls the callback even in case of an error', () => {
       const callback = jest.fn();
 
-      const transform = createTransformFunction();
+      const transform = createTransformFunction({ _console });
       transform({}, null, callback);
 
       expect(callback).toHaveBeenCalled();
+      expect(_console.error).toHaveBeenCalled();
+    });
+
+    describe('with --silent', () => {
+      const options = {
+        ...DEFAULT_OPTIONS,
+        silent: true,
+      };
+
+      it('does not call the format function when the record is an empty object', () => {
+        const record = {};
+
+        const transform = createTransformFunction({
+          _console,
+          options,
+        });
+        transform(record, null, jest.fn());
+
+        expect(_console.error).not.toHaveBeenCalled();
+      });
     });
   });
 
@@ -136,12 +211,12 @@ describe(__filename, () => {
       expect(options).toEqual(DEFAULT_OPTIONS);
     });
 
-    it('accepts the --debug boolean option', () => {
-      const options = parseOptions(['--debug']);
+    it('accepts the --silent boolean option', () => {
+      const options = parseOptions(['--silent']);
 
       expect(options).toEqual({
         ...DEFAULT_OPTIONS,
-        debug: true,
+        silent: true,
       });
     });
 

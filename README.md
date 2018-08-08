@@ -24,10 +24,10 @@ You can specify the mozlog type:
 $ node your-proxy.js | pino-mozlog --type proxy
 ```
 
-You can turn debugging on with `--debug`. Debug messages are sent to `stderr`:
+By default, errors are sent to `stderr` (not formatted for mozlog). You can disable this behavior with `--silent`:
 
 ```
-$ node your-app.js | pino-mozlog --debug
+$ node your-app.js | pino-mozlog --silent
 ```
 
 ## License
