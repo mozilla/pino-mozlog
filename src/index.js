@@ -53,16 +53,24 @@ const format = (
 };
 
 const createTransformFunction = ({
+  _console = console,
   _format = format,
   options = DEFAULT_OPTIONS,
 } = {}) => {
   return (record, enc, cb) => {
     try {
-      if (typeof record.time !== 'undefined') {
-        console.log(JSON.stringify(_format(record, options)));
+      if (typeof record.time === 'undefined') {
+        throw new Error('invalid pino record');
       }
+
+      _console.log(JSON.stringify(_format(record, options)));
     } catch (error) {
-      console.error('[pino-mozlog] could not format:', { error, record });
+      if (options.debug) {
+        _console.error('[pino-mozlog] could not format:', {
+          error: error.toString(),
+          record,
+        });
+      }
     }
 
     cb();
