@@ -24,7 +24,7 @@ You can specify the mozlog type:
 $ node your-proxy.js | pino-mozlog --type proxy
 ```
 
-By default, errors are sent to `stderr` (not formatted for mozlog). You can disable this behavior with `--silent`:
+By default, errors are sent to `stderr` (not mozlog-compliant though). You can disable this behavior and ignore all errors with `--silent`:
 
 ```
 $ node your-app.js | pino-mozlog --silent
