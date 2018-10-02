@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/willdurand/pino-mozlog.svg?branch=master)](https://travis-ci.org/willdurand/pino-mozlog)
 
-A transport for transforming pino logs into [mozlog](https://wiki.mozilla.org/Firefox/Services/Logging#MozLog_application_logging_standard).
+A transport for transforming [pino logs](https://github.com/pinojs) into [mozlog](https://wiki.mozilla.org/Firefox/Services/Logging#MozLog_application_logging_standard).
 
 ## Installation
 
