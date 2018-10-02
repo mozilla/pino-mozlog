@@ -108,7 +108,7 @@ describe(__filename, () => {
         Pid: record.pid,
         Severity: 7,
         Time: convertTimestampToRFC3339(record.time),
-        Timestamp: record.time,
+        Timestamp: record.time * 1000000,
         Type: DEFAULT_OPTIONS.type,
       });
     });

@@ -53,7 +53,7 @@ const format = (
     Pid: pid,
     Severity: pinoSyslog.levelToSeverity(level),
     Time: convertTimestampToRFC3339(time),
-    Timestamp: time,
+    Timestamp: time * 1000000, // nanoseconds
     Type: options.type,
   };
 };
