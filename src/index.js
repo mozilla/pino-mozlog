@@ -1,6 +1,5 @@
 const minimist = require('minimist');
 const pinoSyslog = require('pino-syslog/lib/utils');
-const toRFC3339 = require('internet-timestamp');
 
 const ENV_VERSION = '2.0';
 
