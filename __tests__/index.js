@@ -3,7 +3,6 @@ const { matchers } = require('jest-json-schema');
 const {
   DEFAULT_OPTIONS,
   ENV_VERSION,
-  convertTimestampToRFC3339,
   createParseFunction,
   createTransformFunction,
   format,
@@ -107,8 +106,7 @@ describe(__filename, () => {
         Logger: record.name,
         Pid: record.pid,
         Severity: 7,
-        Time: convertTimestampToRFC3339(record.time),
-        Timestamp: record.time * 1000000,
+        Timestamp: record.time,
         Type: DEFAULT_OPTIONS.type,
       });
     });

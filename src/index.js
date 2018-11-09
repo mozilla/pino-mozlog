@@ -5,8 +5,8 @@ const toRFC3339 = require('internet-timestamp');
 const ENV_VERSION = '2.0';
 
 const DEFAULT_OPTIONS = {
-  type: 'app.log',
   silent: false,
+  type: 'app.log',
 };
 
 const createParseFunction = ({
@@ -29,10 +29,6 @@ const createParseFunction = ({
   };
 };
 
-const convertTimestampToRFC3339 = (timestamp) => {
-  return toRFC3339(new Date(timestamp));
-};
-
 const format = (
   {
     hostname,
@@ -52,8 +48,7 @@ const format = (
     Logger: name,
     Pid: pid,
     Severity: pinoSyslog.levelToSeverity(level),
-    Time: convertTimestampToRFC3339(time),
-    Timestamp: time * 1000000, // nanoseconds
+    Timestamp: time, // should be in nanoseconds
     Type: options.type,
   };
 };
@@ -98,7 +93,6 @@ const parseOptions = (argv) => {
 module.exports = {
   DEFAULT_OPTIONS,
   ENV_VERSION,
-  convertTimestampToRFC3339,
   createParseFunction,
   createTransformFunction,
   format,
