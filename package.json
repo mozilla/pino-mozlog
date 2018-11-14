@@ -13,7 +13,7 @@
   },
   "author": "Mozilla Add-ons Team",
   "license": "MPL-2.0",
-  "repository": "github:willdurand/pino-mozlog",
+  "repository": "github:mozilla/pino-mozlog",
   "dependencies": {
     "minimist": "^1.2.0",
     "pino-syslog": "^1.2.0",
