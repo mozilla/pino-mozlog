@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.1.0
+
+Each record contains a new `severity` field (all lowercase), which corresponds to the Stackdriver logging level.
+
 ## 2.0.0
 
 **Breaking change:** the `Time` field has been dropped (it was an optional field according to the [mozlog specification](https://wiki.mozilla.org/Firefox/Services/Logging) anyway).
