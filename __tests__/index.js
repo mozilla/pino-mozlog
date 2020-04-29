@@ -1,4 +1,5 @@
 const { matchers } = require('jest-json-schema');
+const pinoSyslog = require('pino-syslog/lib/utils');
 
 const {
   DEFAULT_OPTIONS,
@@ -6,6 +7,7 @@ const {
   createParseFunction,
   createTransformFunction,
   format,
+  getStackdriverSeverity,
   parseOptions,
 } = require('../src/index');
 const mozlogSchema = require('../mozlog-schema.json');
@@ -108,6 +110,7 @@ describe(__filename, () => {
         Severity: 7,
         Timestamp: record.time,
         Type: DEFAULT_OPTIONS.type,
+        severity: 100,
       });
     });
 
@@ -168,7 +171,10 @@ describe(__filename, () => {
       expect(_format).not.toHaveBeenCalled();
       expect(_console.error).toHaveBeenCalledWith(
         '[pino-mozlog] could not format:',
-        { error: 'Error: invalid pino record', record }
+        {
+          error: 'Error: invalid pino record',
+          record,
+        }
       );
     });
 
@@ -233,5 +239,30 @@ describe(__filename, () => {
 
       expect(options).toEqual(DEFAULT_OPTIONS);
     });
+  });
+
+  describe('getStackdriverSeverity', () => {
+    it.each([
+      [pinoSyslog.severity.emergency, 800],
+      [pinoSyslog.severity.alert, 700],
+      [pinoSyslog.severity.critical, 600],
+      [pinoSyslog.severity.error, 500],
+      [pinoSyslog.severity.warning, 400],
+      [pinoSyslog.severity.notice, 300],
+      [pinoSyslog.severity.info, 200],
+      [pinoSyslog.severity.debug, 100],
+    ])(
+      'returns the stackdriver level for (syslog) severity = %d',
+      (syslogSeverity, stackdriverSeverity) => {
+        expect(getStackdriverSeverity(syslogSeverity)).toEqual(
+          stackdriverSeverity
+        );
+      }
+    );
+  });
+
+  it('returns 0 for unsupported syslog severities', () => {
+    expect(getStackdriverSeverity(-1)).toEqual(0);
+    expect(getStackdriverSeverity(123)).toEqual(0);
   });
 });
