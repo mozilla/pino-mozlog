@@ -8,6 +8,21 @@ const DEFAULT_OPTIONS = {
   type: 'app.log',
 };
 
+const STACKDRIVER_LEVEL_MAP = {
+  [pinoSyslog.severity.emergency]: 800,
+  [pinoSyslog.severity.alert]: 700,
+  [pinoSyslog.severity.critical]: 600,
+  [pinoSyslog.severity.error]: 500,
+  [pinoSyslog.severity.warning]: 400,
+  [pinoSyslog.severity.notice]: 300,
+  [pinoSyslog.severity.info]: 200,
+  [pinoSyslog.severity.debug]: 100,
+};
+
+const getStackdriverSeverity = (severity) => {
+  return STACKDRIVER_LEVEL_MAP[severity] || 0;
+};
+
 const createParseFunction = ({
   _console = console,
   options = DEFAULT_OPTIONS,
@@ -40,15 +55,19 @@ const format = (
   },
   options = DEFAULT_OPTIONS
 ) => {
+  const syslogSeverity = pinoSyslog.levelToSeverity(level);
+
   return {
     EnvVersion: ENV_VERSION,
     Fields: fields,
     Hostname: hostname,
     Logger: name,
     Pid: pid,
-    Severity: pinoSyslog.levelToSeverity(level),
+    Severity: syslogSeverity,
     Timestamp: time, // should be in nanoseconds
     Type: options.type,
+    // Add a custom key for stackdriver.
+    severity: getStackdriverSeverity(syslogSeverity),
   };
 };
 
@@ -95,5 +114,6 @@ module.exports = {
   createParseFunction,
   createTransformFunction,
   format,
+  getStackdriverSeverity,
   parseOptions,
 };
