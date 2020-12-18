@@ -82,6 +82,7 @@ jobs:
       - run:
           name: publish package
           command: |
+            npm run build
             cd dist/
             npm publish
 
