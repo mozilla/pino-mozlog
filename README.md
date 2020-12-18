@@ -1,6 +1,6 @@
 # pino-mozlog
 
-[![Build Status](https://travis-ci.org/mozilla/pino-mozlog.svg?branch=master)](https://travis-ci.org/mozilla/pino-mozlog)
+[![CircleCI](https://circleci.com/gh/mozilla/pino-mozlog.svg?style=svg)](https://circleci.com/gh/mozilla/pino-mozlog) [![npm version](https://badge.fury.io/js/pino-mozlog.svg)](https://badge.fury.io/js/pino-mozlog)
 
 A transport for transforming [pino logs](https://github.com/pinojs) into [mozlog](https://wiki.mozilla.org/Firefox/Services/Logging#MozLog_application_logging_standard).
 
