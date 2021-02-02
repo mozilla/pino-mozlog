@@ -27,7 +27,7 @@
     "@babel/plugin-transform-spread": "^7.12.1",
     "@babel/preset-env": "^7.12.11",
     "jest": "^26.0.0",
-    "jest-json-schema": "^2.0.1",
+    "jest-json-schema": "^5.0.0",
     "prettier": "^1.14.0",
     "rimraf": "^2.6.2"
   },
