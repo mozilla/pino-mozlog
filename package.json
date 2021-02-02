@@ -22,9 +22,10 @@
     "through2": "2.0.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-transform-spread": "^7.12.1",
+    "@babel/preset-env": "^7.12.11",
     "jest": "^26.0.0",
     "jest-json-schema": "^2.0.1",
     "prettier": "^1.14.0",
