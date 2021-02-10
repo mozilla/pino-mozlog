@@ -1,10 +1,10 @@
 {
   "name": "pino-mozlog",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "A transport for transforming pino logs into mozlog",
   "main": "index.js",
   "bin": {
-    "pino-mozlog": "./index.js"
+    "pino-mozlog": "index.js"
   },
   "scripts": {
     "build": "rimraf dist/ && babel -d dist/ index.js && babel -d dist/src/ src/ && cp -r LICENSE.txt README.md package.json dist/",
