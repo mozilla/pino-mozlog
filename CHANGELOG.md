@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2.3.0
+
+No changes (lockfile maintenance only).
+
+## 2.2.0
+
+Use `readable-stream` instead of `through2` (see #33).
+
 ## 2.1.0
 
 Each record contains a new `severity` field (all lowercase), which corresponds to the Stackdriver logging level.
