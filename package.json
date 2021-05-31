@@ -1,6 +1,6 @@
 {
   "name": "pino-mozlog",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "A transport for transforming pino logs into mozlog",
   "main": "index.js",
   "bin": {
