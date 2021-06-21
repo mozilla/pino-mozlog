@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.6.0
+
+No changes (lockfile maintenance only).
+
 ## 2.5.0
 
 No changes (lockfile maintenance only).
