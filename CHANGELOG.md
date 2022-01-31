@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.9.0
+
+No changes (lockfile maintenance only).
+
 ## 2.8.0
 
 Update `split2` to v4 (see #68).
