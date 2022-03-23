@@ -15,7 +15,7 @@
   "license": "MPL-2.0",
   "repository": "github:mozilla/pino-mozlog",
   "dependencies": {
-    "minimist": "1.2.5",
+    "minimist": "1.2.6",
     "pino-syslog": "2.0.0",
     "pump": "3.0.0",
     "readable-stream": "3.6.0",
