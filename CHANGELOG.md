@@ -1,9 +1,12 @@
 # CHANGELOG
 
-## 2.10.0
+## 2.11.0
 
 No changes (lockfile maintenance only).
 
+## 2.10.0
+
+No changes (lockfile maintenance only).
 
 ## 2.9.0
 
