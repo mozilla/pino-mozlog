@@ -16,7 +16,7 @@
   "repository": "github:mozilla/pino-mozlog",
   "dependencies": {
     "minimist": "1.2.7",
-    "pino-syslog": "2.0.0",
+    "pino-syslog": "3.0.0",
     "pump": "3.0.0",
     "readable-stream": "4.3.0",
     "split2": "4.1.0"
